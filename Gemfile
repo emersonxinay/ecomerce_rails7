@@ -72,3 +72,8 @@ group :test do
 end
 
 gem "devise"
+
+gem 'activemerchant' # gestión de pagos
+gem 'dotenv-rails', groups: [:development, :test] # gestión de variables / credenciales
+
+gem 'rack-cors'

@@ -29,4 +29,15 @@ class OrdenTest < ActiveSupport::TestCase
     assert_equal orden.detalles_ordenes.count, 1
   end
 
+  test 'No agregar productos con 0 stock' do
+    # Preparar
+    usuario = Usuario.create(email: 'usuario@correo.com', password: '1q2we34r')
+    orden = Orden.create(usuario_id: usuario.id)
+    producto_sin_stock = Producto.create(nombre: 'testp1', precio: 1, stock: 0, sku: 'CM003')
+    # Actuar / Ejecutar
+    orden.agregar_producto(producto_sin_stock.id, 1)
+    # asertar 
+    assert_equal orden.detalles_ordenes.count, 0
+  end
+
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_13_002030) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_14_002323) do
   create_table "administradores", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -47,6 +47,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_13_002030) do
     t.index ["producto_id"], name: "index_detalles_ordenes_on_producto_id"
   end
 
+  create_table "metodos_pago", force: :cascade do |t|
+    t.string "nombre"
+    t.string "codigo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "ordenes", force: :cascade do |t|
     t.integer "usuario_id", null: false
     t.string "numero"
@@ -55,6 +62,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_13_002030) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["usuario_id"], name: "index_ordenes_on_usuario_id"
+  end
+
+  create_table "pagos", force: :cascade do |t|
+    t.string "estado"
+    t.decimal "total"
+    t.string "token"
+    t.integer "orden_id", null: false
+    t.integer "metodo_pago_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["metodo_pago_id"], name: "index_pagos_on_metodo_pago_id"
+    t.index ["orden_id"], name: "index_pagos_on_orden_id"
   end
 
   create_table "productos", force: :cascade do |t|
@@ -82,4 +101,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_13_002030) do
   add_foreign_key "detalles_ordenes", "ordenes"
   add_foreign_key "detalles_ordenes", "productos"
   add_foreign_key "ordenes", "usuarios"
+  add_foreign_key "pagos", "metodos_pago"
+  add_foreign_key "pagos", "ordenes"
 end

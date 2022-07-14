@@ -49,6 +49,11 @@ GEM
     activejob (7.0.3)
       activesupport (= 7.0.3)
       globalid (>= 0.3.6)
+    activemerchant (1.126.0)
+      activesupport (>= 4.2)
+      builder (>= 2.1.2, < 4.0.0)
+      i18n (>= 0.6.9)
+      nokogiri (~> 1.4)
     activemodel (7.0.3)
       activesupport (= 7.0.3)
     activerecord (7.0.3)
@@ -95,6 +100,10 @@ GEM
       responders
       warden (~> 1.2.3)
     digest (3.1.0)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.10.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -145,6 +154,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.4)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-test (2.0.2)
       rack (>= 1.3)
     rails (7.0.3)
@@ -230,13 +241,16 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activemerchant
   bootsnap
   capybara
   debug
   devise
+  dotenv-rails
   importmap-rails
   jbuilder
   puma (~> 5.0)
+  rack-cors
   rails (~> 7.0.3)
   redis (~> 4.0)
   selenium-webdriver

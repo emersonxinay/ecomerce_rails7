@@ -1,10 +1,13 @@
 class Orden < ApplicationRecord
-  before_create -> { generar_numero(tam_hash) } # solamente se va a ejecutar la primera que se guarda 
+  before_create -> { generar_numero(tam_hash) } # solamente se va a ejecutar la primera que se guarde una orden
+                                                
   belongs_to :usuario
-
   has_many :detalles_ordenes
   has_many :productos, through: :detalles_ordenes
-  validates :numero, uniqueness: true  
+  has_many :pagos
+  has_many :metodos_pago, through: :pagos
+
+  validates :numero, uniqueness: true 
   def generar_numero(tam_hash)
     self.numero ||= loop do
       random = generar_codigo_candidato(tam_hash)
@@ -27,11 +30,7 @@ class Orden < ApplicationRecord
   def agregar_producto(id_producto, cantidad)
     producto = Producto.find(id_producto)
     if producto
-      detalles_ordenes.create(
-        producto_id: producto.id, 
-        cantidad: cantidad, 
-        precio: producto.precio
-      )
+      detalles_ordenes.create(producto_id: producto.id, cantidad: cantidad, precio: producto.precio)
     end
   end
   
